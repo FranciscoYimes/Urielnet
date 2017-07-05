@@ -1,0 +1,44 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.2.3'
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+
+apply plugin: 'com.android.application'
+
+dependencies {
+    compile 'com.makeramen:roundedimageview:+'
+    compile 'com.github.chrisbanes.photoview:library:+'
+    compile 'com.flaviofaria:kenburnsview:1.0.6'
+    // compile project(':ion:ion')
+    compile 'com.koushikdutta.ion:ion:2.+'
+}
+
+android {
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            res.srcDirs = ['res/']
+            java.srcDirs = ['src/']
+            assets.srcDirs = ['assets/']
+        }
+    }
+
+    defaultConfig {
+        targetSdkVersion 23
+        minSdkVersion 9
+    }
+
+    compileSdkVersion project.hasProperty('global_compileSdkVersion') ? global_compileSdkVersion : 25
+    buildToolsVersion project.hasProperty('global_buildToolsVersion') ? global_buildToolsVersion : '25.0.2'
+}
+

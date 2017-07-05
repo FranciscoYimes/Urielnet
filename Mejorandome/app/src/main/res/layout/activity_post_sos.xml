@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:id="@+id/activity_post_sos"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="mejorandome.mejorandome.PostSOSActivity">
+
+    <LinearLayout
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textColor="@color/colorPrimary"
+            android:textSize="26dp"
+            android:layout_gravity="center_horizontal"
+            android:text="Hemos enviado un mensaje"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:textColor="@color/colorPrimary"
+            android:textSize="26dp"
+            android:layout_gravity="center_horizontal"
+            android:text="a tus contactos cercanos."
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:textColor="@color/colorPrimary"
+            android:layout_marginTop="20dp"
+            android:textSize="20dp"
+            android:layout_gravity="center_horizontal"
+            android:text="Queremos que recuerdes cuáles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:textColor="@color/colorPrimary"
+            android:textSize="20dp"
+            android:layout_gravity="center_horizontal"
+            android:text="son tus objetivos, y por qué"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:textColor="@color/colorPrimary"
+            android:textSize="20dp"
+            android:layout_gravity="center_horizontal"
+            android:text="estás aquí."
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="150dp">
+
+        <TextView
+            android:textColor="@color/color_green"
+            android:textSize="18dp"
+            android:layout_gravity="left"
+            android:text="1.- 'Debo acercarme a mis padres'"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textColor="@color/color_green"
+            android:textSize="18dp"
+            android:layout_gravity="left"
+            android:text="2.- 'Quiero compartir más con mis hijos'"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textColor="@color/color_green"
+            android:textSize="18dp"
+            android:layout_gravity="left"
+            android:text="3.- 'Debo acercarme a mis padres'"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textColor="@color/color_green"
+            android:textSize="18dp"
+            android:layout_gravity="left"
+            android:text="4.- 'Quiero compartir más con mis hijos'"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:background="@color/colorPrimary"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/image1"
+                android:layout_width="170dp"
+                android:layout_height="90dp" />
+            <ImageView
+                android:id="@+id/image2"
+                android:layout_marginLeft="5dp"
+                android:layout_width="170dp"
+                android:layout_height="90dp" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/image3"
+                android:layout_width="170dp"
+                android:layout_height="90dp" />
+            <ImageView
+                android:id="@+id/image4"
+                android:layout_marginLeft="5dp"
+                android:layout_width="170dp"
+                android:layout_height="90dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>
