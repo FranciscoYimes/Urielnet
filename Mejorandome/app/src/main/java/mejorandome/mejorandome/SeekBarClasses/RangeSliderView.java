@@ -31,7 +31,7 @@ public class RangeSliderView extends View {
 
     private static final long RIPPLE_ANIMATION_DURATION_MS = TimeUnit.MILLISECONDS.toMillis(700);
 
-    private static final int DEFAULT_PAINT_STROKE_WIDTH = 5;
+    private static final int DEFAULT_PAINT_STROKE_WIDTH = 10;
 
     private static final int DEFAULT_FILLED_COLOR = Color.parseColor("#FFA500");
 
@@ -43,7 +43,7 @@ public class RangeSliderView extends View {
 
     private static final float DEFAULT_SLIDER_RADIUS_PERCENT = 0.25f;
 
-    private static final int DEFAULT_RANGE_COUNT = 6;
+    private static final int DEFAULT_RANGE_COUNT = 10;
 
     private static final int DEFAULT_HEIGHT_IN_DP = 50;
 

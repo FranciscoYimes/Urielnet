@@ -8,20 +8,24 @@
             android:icon="@drawable/pie_chart_icon"
             android:title="Inicio" />
         <item
+            android:checkable="false"
             android:id="@+id/mood"
             android:icon="@drawable/mood_icon"
             android:title="Estado Anímico" />
 
         <item
+            android:checkable="false"
             android:id="@+id/citas"
             android:icon="@drawable/calendar_icon"
             android:title="Citas" />
         <item
+            android:checkable="false"
             android:id="@+id/objetivos"
             android:icon="@drawable/star_icon"
             android:title="Objetivos" />
 
         <item
+            android:checkable="false"
             android:id="@+id/settings"
             android:icon="@drawable/ic_menu_manage"
             android:title="Configuracion" />

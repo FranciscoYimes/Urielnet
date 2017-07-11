@@ -1,19 +1,15 @@
 package mejorandome.mejorandome;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -44,16 +40,18 @@ public class DashboardFragment extends Fragment {
     private TextView negativeMood;
     private TextView positiveMood;
     private TextView dateText;
+    private TextView logros;
+    private TextView inasistencias;
+    private TextView nombrePacienteText;
+    private TextView nombreCentroText;
     private Button meetingButton;
     private Button moodButton;
     private Button goalsButton;
     private Button sosButton;
-    private MenuItem moodItem;
-    private Menu menu;
+    private Button inasistenciasButton;
     private int positiveEmotions;
     private int negativeEmotions;
     private int idPaciente;
-    private View rootView2;
     private Intent intent;
 
     String meses[] = {"Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto"," ;Septiembre","Octubre","Noviembre","Diciemrbre"};
@@ -62,48 +60,57 @@ public class DashboardFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.fragment_dashboard, container, false);
-        rootView2 = inflater.inflate(R.layout.activity_main, container, false);
 
         pieChart = (PieChartView) rootView.findViewById(R.id.pie_chart);
         negativeMood = (TextView) rootView.findViewById(R.id.negative_mood_text);
         positiveMood = (TextView) rootView.findViewById(R.id.positive_mood_text);
+        logros = (TextView) rootView.findViewById(R.id.logros);
+        inasistencias = (TextView) rootView.findViewById(R.id.inasistencias);
         dateText = (TextView) rootView.findViewById(R.id.dateText);
+        nombrePacienteText = (TextView) rootView.findViewById(R.id.nombre_paciente);
+        nombreCentroText = (TextView) rootView.findViewById(R.id.nombre_centro);
         moodButton = (Button) rootView.findViewById(R.id.mood_button);
         meetingButton = (Button) rootView.findViewById(R.id.citas);
         goalsButton = (Button) rootView.findViewById(R.id.goalsButton);
         sosButton = (Button) rootView.findViewById(R.id.sos_button);
+        inasistenciasButton = (Button) rootView.findViewById(R.id.inasistencias_button);
 
-        NavigationView navigationView = (NavigationView) rootView2.findViewById(R.id.nav_view);
-        if(navigationView!=null)  menu = navigationView.getMenu();
+        idPaciente = getActivity().getIntent().getIntExtra("id",0);
 
+        pieChart.setInteractive(true);
 
+        new getNextMeeting().execute();
+
+        new GetEmotionsResume().execute();
+
+        new getUserData().execute();
+
+        //new getMoodStatus().execute();
 
         moodButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(menu!=null)
-                {
-                    menu.findItem(R.id.dashboard).setChecked(false);
-                    menu.findItem(R.id.mood).setChecked(true);
-                }
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_frame,new MoodFragment()).commit();
+                Intent intent = new Intent(getActivity(),MoodActivity.class);
+                intent.putExtra("idPaciente",idPaciente);
+                startActivity(intent);
             }
         });
 
         meetingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_frame,new MeetingFragment()).commit();
+                Intent intent = new Intent(getActivity(),MeetingActivity.class);
+                intent.putExtra("idPaciente",idPaciente);
+                startActivity(intent);
             }
         });
 
         goalsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_frame,new GoalsFragment()).commit();
+                Intent intent = new Intent(getActivity(),GoalsActivity.class);
+                intent.putExtra("idPaciente",idPaciente);
+                startActivity(intent);
             }
         });
 
@@ -113,18 +120,17 @@ public class DashboardFragment extends Fragment {
                 GetSosMessage();
                 intent = new Intent(getActivity(),PostSOSActivity.class);
                 startActivity(intent);
-
             }
         });
 
-        pieChart.setInteractive(true);
-
-        idPaciente = getActivity().getIntent().getIntExtra("id",0);
-
-        new getNextMeeting().execute();
-
-
-        new GetEmotionsResume().execute();
+        inasistenciasButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),PastMeetingActivity.class);
+                intent.putExtra("idPaciente",idPaciente);
+                startActivity(intent);
+            }
+        });
 
         return rootView;
     }
@@ -170,8 +176,6 @@ public class DashboardFragment extends Fragment {
                 transporte.call(SOAP_ACTION, sobre);
 
                 resultado = (SoapPrimitive) sobre.getResponse();
-
-
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -235,8 +239,6 @@ public class DashboardFragment extends Fragment {
 
                 resultado = (SoapObject) sobre.getResponse();
 
-
-
             } catch (MalformedURLException e) {
                 e.printStackTrace();
                 Error = e.toString();
@@ -282,9 +284,10 @@ public class DashboardFragment extends Fragment {
     public String GetDate(String date)
     {
         int i = 0;
-        String fechaFinal="";
+        String fechaFinal;
         String month="";
         String day="";
+        String hora="";
         while(!"/".equals(date.charAt(i)+""))
         {
             month = month + date.charAt(i);
@@ -298,18 +301,25 @@ public class DashboardFragment extends Fragment {
             i++;
         }
         i=i+6;
+
+        while(!":".equals(date.charAt(i)+""))
+        {
+            hora = hora + date.charAt(i);
+            i++;
+        }
+
         fechaFinal = day + " de ";
         fechaFinal = fechaFinal+meses[Integer.parseInt(month)-1];
-        fechaFinal = fechaFinal + ", "+date.charAt(i)+date.charAt(i+1)+date.charAt(i+2)+date.charAt(i+3)+date.charAt(i+4)+" "+date.charAt(i+9)+date.charAt(i+10);
+        fechaFinal = fechaFinal + ", "+hora+":"+date.charAt(i+1)+date.charAt(i+2)+" "+date.charAt(i+7)+date.charAt(i+8);
 
         return fechaFinal;
     }
 
     public void GetSosMessage()
     {
-        //sendSMS("+56974785845","Francisco");
-        //sendSMS("+56967864621","Gabriel");
-        //sendSMS("+56961590408","Pilar");
+        sendSMS("+56974785845","Francisco");
+        sendSMS("+56967864621","Gabriel");
+        sendSMS("+56961590408","Pilar");
     }
 
     private void sendSMS(String phone, String name) {
@@ -322,6 +332,141 @@ public class DashboardFragment extends Fragment {
             SmsManager sms = SmsManager.getDefault();
             String message = "Estimado/a "+name+", nuestro paciente ha activado un mensaje de alerta, rogamos ponerse en contacto de inmediato.";
             sms.sendTextMessage(phone, null, message , null, null);
+        }
+    }
+
+    private class getMoodStatus extends AsyncTask<Void,Void,Void>
+    {
+        SoapPrimitive resultado;
+        @Override
+        protected Void doInBackground(Void... params) {
+            final String NAMESPACE = "http://tempuri.org/";
+            final String URL = "http://www.mejorandome.com/servicio/Service1.svc";
+            final String METHOD_NAME = "getMoodStatus";
+            final String SOAP_ACTION = "http://tempuri.org/IService1/getMoodStatus";
+            String Error;
+            try {
+                SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+                request.addProperty("idPaciente", idPaciente); // Paso parametros al WS
+
+                SoapSerializationEnvelope sobre = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+                sobre.dotNet = true;
+                sobre.setOutputSoapObject(request);
+
+                HttpTransportSE transporte = new HttpTransportSE(URL);
+
+                transporte.call(SOAP_ACTION, sobre);
+
+                resultado = (SoapPrimitive) sobre.getResponse();
+
+                Log.i("Resultado", resultado.toString());
+
+
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+                Error = e.toString();
+
+            } catch (SoapFault soapFault) {
+                soapFault.printStackTrace();
+                Error = soapFault.toString();
+
+            } catch (XmlPullParserException e) {
+                e.printStackTrace();
+                Error = e.toString();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                Error = e.toString();
+            }
+
+            return null;
+        }
+        protected void onPostExecute(Void result)
+        {
+            if(resultado!=null)
+            {
+                if(Boolean.parseBoolean(resultado.toString()))
+                {
+                    moodButton.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    moodButton.setVisibility(View.GONE);
+                }
+            }
+            else
+            {
+                moodButton.setVisibility(View.GONE);
+            }
+
+            super.onPostExecute(result);
+        }
+    }
+
+    private class getUserData extends AsyncTask<Void,Void,Void>
+    {
+        SoapObject resultado;
+        @Override
+        protected Void doInBackground(Void... params) {
+            final String NAMESPACE = "http://tempuri.org/";
+            final String URL = "http://www.mejorandome.com/servicio/Service1.svc";
+            final String METHOD_NAME = "getUserData";
+            final String SOAP_ACTION = "http://tempuri.org/IService1/getUserData";
+            String Error;
+            try {
+                SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+                request.addProperty("idPaciente", idPaciente); // Paso parametros al WS
+
+                SoapSerializationEnvelope sobre = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+                sobre.dotNet = true;
+                sobre.setOutputSoapObject(request);
+
+                HttpTransportSE transporte = new HttpTransportSE(URL);
+
+                transporte.call(SOAP_ACTION, sobre);
+
+                resultado = (SoapObject) sobre.getResponse();
+
+                Log.i("Resultado", resultado.toString());
+
+
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+                Error = e.toString();
+
+            } catch (SoapFault soapFault) {
+                soapFault.printStackTrace();
+                Error = soapFault.toString();
+
+            } catch (XmlPullParserException e) {
+                e.printStackTrace();
+                Error = e.toString();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                Error = e.toString();
+            }
+
+            return null;
+        }
+        protected void onPostExecute(Void result)
+        {
+            if(resultado!=null)
+            {
+                logros.setText(resultado.getProperty("Logros").toString());
+                inasistencias.setText(resultado.getProperty("InasistenciasSeguidas").toString());
+            }
+            else
+            {
+                logros.setText("0");
+                inasistencias.setText("0");
+                nombrePacienteText.setText("FcoYimes");
+                nombreCentroText.setText("La Roca");
+            }
+
+            super.onPostExecute(result);
         }
     }
 }

@@ -34,7 +34,27 @@
         </activity>
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".PostSOSActivity"></activity>
+        <activity android:name=".PostSOSActivity" />
+        <activity
+            android:name=".MoodActivity"
+            android:label="Estado Animico"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".MeetingActivity"
+            android:label="Proximas Citas"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".GoalsActivity"
+            android:label="Objetivos"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".SettingsActivity"
+            android:label="Configuración"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".PastMeetingActivity"
+            android:label="Citas Anteriores"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

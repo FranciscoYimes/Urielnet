@@ -43,9 +43,9 @@ public class SplashActivity extends AppCompatActivity {
 
         splashImage = (ImageView) findViewById(R.id.splashImage);
         appearAnimation = new AlphaAnimation(0.0f, 1.0f);
-        appearAnimation.setDuration(2000);
+        appearAnimation.setDuration(1500);
         appearAnimation.setFillAfter(true);
-        new GetSessionStatus().execute();
+
 
         Thread splashThread = new Thread()
         {
@@ -72,28 +72,12 @@ public class SplashActivity extends AppCompatActivity {
                 }
                 finally
                 {
-                    do
-                    {
-                        if(status==2)
-                        {
-                            Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                            intent.putExtra("id",dni);
-                            startActivity(intent);
-                        }
-                        if(status==1)
-                        {
-                            Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-                            startActivity(intent);
-                        }
-                    }while (status==0);
-
-                    finish();
+                    new GetSessionStatus().execute();
                 }
 
             }
         };
         splashThread.start();
-
     }
 
     private class GetSessionStatus extends AsyncTask<Void,Void,Void>
@@ -153,14 +137,23 @@ public class SplashActivity extends AppCompatActivity {
 
                 if(dni==0)
                 {
-                    status = 1;
+                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                    startActivity(intent);
                 }
                 else
                 {
-                    status = 2;
+                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                    intent.putExtra("id",dni);
+                    startActivity(intent);
                 }
             }
-            else status = 1;
+            else
+            {
+                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+
+            finish();
 
             super.onPostExecute(result);
         }

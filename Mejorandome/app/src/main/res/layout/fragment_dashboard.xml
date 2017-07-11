@@ -179,6 +179,7 @@
                         android:layout_height="wrap_content">
 
                         <TextView
+                            android:id="@+id/logros"
                             android:text="4"
                             android:textSize="25dp"
                             android:layout_marginLeft="10dp"
@@ -226,6 +227,7 @@
                         android:layout_height="wrap_content">
 
                         <TextView
+                            android:id="@+id/inasistencias"
                             android:text="2"
                             android:textSize="25dp"
                             android:layout_marginLeft="10dp"
@@ -234,6 +236,7 @@
                             android:layout_height="wrap_content" />
 
                         <Button
+                            android:id="@+id/inasistencias_button"
                             android:layout_gravity="center_vertical"
                             android:text="Inasistencias"
                             android:layout_marginRight="10dp"

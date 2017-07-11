@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:rsv="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_mood"
+    android:background="#E0E0E0"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="mejorandome.mejorandome.MoodActivity"
+    tools:showIn="@layout/activity_mood">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="400dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/estadoP1_text"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="20dp"
+                    android:textColor="@color/colorAccent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <mejorandome.mejorandome.SeekBarClasses.RangeSliderView
+                    android:id="@+id/estadoP1_seek"
+                    rsv:filledColor="@color/color_green"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp" />
+
+                <TextView
+                    android:id="@+id/estadoP2_text"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="20dp"
+                    android:textColor="@color/colorAccent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <mejorandome.mejorandome.SeekBarClasses.RangeSliderView
+                    android:id="@+id/estadoP2_seek"
+                    rsv:filledColor="@color/colorAccent"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp" />
+
+                <TextView
+                    android:id="@+id/estadoP3_text"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="20dp"
+                    android:textColor="@color/colorAccent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <mejorandome.mejorandome.SeekBarClasses.RangeSliderView
+                    android:id="@+id/estadoP3_seek"
+                    rsv:filledColor="#FFD700"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp" />
+
+                <TextView
+                    android:id="@+id/estadoP4_text"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="20dp"
+                    android:textColor="@color/colorAccent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <mejorandome.mejorandome.SeekBarClasses.RangeSliderView
+                    android:id="@+id/estadoP4_seek"
+                    rsv:filledColor="#FFD700"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp" />
+
+                <TextView
+                    android:id="@+id/estadoN1_text"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="20dp"
+                    android:textColor="@color/colorAccent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <mejorandome.mejorandome.SeekBarClasses.RangeSliderView
+                    android:id="@+id/estadoN1_seek"
+                    rsv:filledColor="@color/color_red"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp" />
+
+                <TextView
+                    android:id="@+id/estadoN2_text"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="20dp"
+                    android:textColor="@color/colorAccent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <mejorandome.mejorandome.SeekBarClasses.RangeSliderView
+                    android:id="@+id/estadoN2_seek"
+                    rsv:filledColor="#F37506"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp" />
+
+                <TextView
+                    android:id="@+id/estadoN3_text"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="20dp"
+                    android:textColor="@color/colorAccent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <mejorandome.mejorandome.SeekBarClasses.RangeSliderView
+                    android:id="@+id/estadoN3_seek"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp" />
+
+                <TextView
+                    android:id="@+id/estadoN4_text"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="20dp"
+                    android:textColor="@color/colorAccent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <mejorandome.mejorandome.SeekBarClasses.RangeSliderView
+                    android:id="@+id/estadoN4_seek"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp" />
+
+                <EditText
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/circle_edittext"
+                    android:id="@+id/peso"
+                    android:textColor="@color/colorPrimary"
+                    android:textColorHint="@color/colorPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_horizontal"
+                    android:textAlignment="center"
+                    android:ems="10"
+                    android:hint="Peso Kg"
+                    android:inputType="number" />
+
+                <LinearLayout
+                    android:layout_gravity="center_horizontal"
+                    android:id="@+id/consumo_abstinencia"
+                    android:layout_marginTop="30dp"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_marginLeft="5dp"
+                        android:textSize="18dp"
+                        android:textColor="@color/colorAccent"
+                        android:text="¿Has consumido hoy?"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <Switch
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:id="@+id/drugCheck"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/consumo_sin_abstinencia"
+                    android:visibility="gone"
+                    android:layout_marginTop="30dp"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="5dp"
+                        android:textSize="18dp"
+                        android:textColor="@color/colorAccent"
+                        android:text="¿Cuanto has consumido hoy?"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <mejorandome.mejorandome.SeekBarClasses.RangeSliderView
+                        android:id="@+id/consumo_seek"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="18dp"
+                    android:textColor="@color/colorAccent"
+                    android:text="¿Sientes un problema físico?"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="18dp"
+                    android:textColor="@color/colorAccent"
+                    android:text="Identificalo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <EditText
+                    android:layout_marginBottom="150dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/circle_edittext"
+                    android:id="@+id/problema_fisico"
+                    android:textColor="@color/colorPrimary"
+                    android:textColorHint="@color/colorPrimary"
+                    android:textAlignment="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center_horizontal"
+                    android:ems="10"
+                    android:hint="..."
+                    android:inputType="text" />
+
+            </LinearLayout>
+
+
+        </ScrollView>
+
+        <Button
+            android:background="@drawable/button"
+            android:id="@+id/save_mood_button"
+            android:layout_marginTop="55dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:text="Guardar" />
+
+    </LinearLayout>
+
+</RelativeLayout>

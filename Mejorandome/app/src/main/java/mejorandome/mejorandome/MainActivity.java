@@ -29,8 +29,9 @@ import mejorandome.mejorandome.Adapters.Utils;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    FragmentManager fragmentManager;
-    Utils utils;
+    private FragmentManager fragmentManager;
+    private Utils utils;
+    private int idPaciente;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,8 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         utils = new Utils();
+
+        idPaciente = getIntent().getIntExtra("id",0);
 
         fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_frame,new DashboardFragment()).commit();
@@ -93,18 +96,26 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.dashboard) {
             fragmentManager.beginTransaction().replace(R.id.content_frame,new DashboardFragment()).commit();
         } else if (id == R.id.mood) {
-            fragmentManager.beginTransaction().replace(R.id.content_frame,new MoodFragment()).commit();
+            Intent intent = new Intent(MainActivity.this,MoodActivity.class);
+            intent.putExtra("idPaciente",idPaciente);
+            startActivity(intent);
         } else if (id == R.id.settings) {
-
+            Intent intent = new Intent(MainActivity.this,SettingsActivity.class);
+            intent.putExtra("idPaciente",idPaciente);
+            startActivity(intent);
         }
         else if (id == R.id.logout) {
             new logout().execute();
         }
         else if (id == R.id.citas) {
-            fragmentManager.beginTransaction().replace(R.id.content_frame,new MeetingFragment()).commit();
+            Intent intent = new Intent(MainActivity.this,MeetingActivity.class);
+            intent.putExtra("idPaciente",idPaciente);
+            startActivity(intent);
         }
         else if (id == R.id.objetivos) {
-            fragmentManager.beginTransaction().replace(R.id.content_frame,new GoalsFragment()).commit();
+            Intent intent = new Intent(MainActivity.this,GoalsActivity.class);
+            intent.putExtra("idPaciente",idPaciente);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
