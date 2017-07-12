@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,7 +42,7 @@ public class MoodActivity extends AppCompatActivity {
     private TextView statusN2;
     private TextView statusN3;
     private TextView statusN4;
-    private RangeSliderView seekP1;
+    private SeekBar seekP1;
     private RangeSliderView seekP2;
     private RangeSliderView seekP3;
     private RangeSliderView seekP4;
@@ -85,7 +86,7 @@ public class MoodActivity extends AppCompatActivity {
         statusN3 = (TextView) findViewById(R.id.estadoN3_text);
         statusN4 = (TextView) findViewById(R.id.estadoN4_text);
 
-        seekP1 = (RangeSliderView) findViewById(R.id.estadoP1_seek);
+        seekP1 = (SeekBar) findViewById(R.id.estadoP1_seek);
         seekP2 = (RangeSliderView) findViewById(R.id.estadoP2_seek);
         seekP3 = (RangeSliderView) findViewById(R.id.estadoP3_seek);
         seekP4 = (RangeSliderView) findViewById(R.id.estadoP4_seek);
@@ -144,6 +145,8 @@ public class MoodActivity extends AppCompatActivity {
                 transporte.call(SOAP_ACTION, sobre);
 
                 resultado = (SoapObject) sobre.getResponse();
+
+                resultado = (SoapObject) resultado.getProperty(0);
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -261,7 +264,7 @@ public class MoodActivity extends AppCompatActivity {
                 consumo = drugSeek.getIndex();
             }
 
-            estadoP1 = seekP1.getIndex();
+            estadoP1 = seekP1.getProgress();
             estadoP2 = seekP2.getIndex();
             estadoP3 = seekP3.getIndex();
             estadoP4 = seekP4.getIndex();
@@ -272,7 +275,7 @@ public class MoodActivity extends AppCompatActivity {
 
             problemaFisico = problemaFisicoText.getText().toString();
 
-            finish();
+            new sendMoodData().execute();
         }
         else
         {

@@ -54,6 +54,14 @@
         <activity
             android:name=".PastMeetingActivity"
             android:label="Citas Anteriores"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".RedApoyoActivity"
+            android:label="Red de Apoyo"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".NewRedApoyoActivity"
+            android:label="Nuevo Registro"
             android:theme="@style/AppTheme"></activity>
     </application>
 

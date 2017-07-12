@@ -29,6 +29,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     private Button logoutButton;
     private Button changepassOption;
+    private Button redApoyo;
     private EditText password1;
     private EditText password2;
     private TextView changePassMessage;
@@ -62,6 +63,7 @@ public class SettingsActivity extends AppCompatActivity {
         password2 = (EditText) findViewById(R.id.password2);
         changePassButton = (Button) findViewById(R.id.change_pass_button);
         changePassMessage = (TextView) findViewById(R.id.change_pass_message);
+        redApoyo = (Button) findViewById(R.id.red_apoyo);
 
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,6 +85,15 @@ public class SettingsActivity extends AppCompatActivity {
                 {
                     changePassLayout.setVisibility(View.VISIBLE);
                 }
+            }
+        });
+
+        redApoyo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SettingsActivity.this, RedApoyoActivity.class);
+                intent.putExtra("idPaciente",idPaciente);
+                startActivity(intent);
             }
         });
 

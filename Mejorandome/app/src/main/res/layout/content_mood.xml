@@ -38,11 +38,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <mejorandome.mejorandome.SeekBarClasses.RangeSliderView
+                <SeekBar
+                    android:maxHeight="50dp"
                     android:id="@+id/estadoP1_seek"
-                    rsv:filledColor="@color/color_green"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp" />
+                    android:layout_height="20dp"
+                    android:max="10"
+                    android:theme="@style/Widget.AppCompat.SeekBar.Discrete" />
 
                 <TextView
                     android:id="@+id/estadoP2_text"
@@ -229,7 +231,7 @@
                     android:layout_height="wrap_content" />
 
                 <EditText
-                    android:layout_marginBottom="150dp"
+                    android:layout_marginBottom="130dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/circle_edittext"
                     android:id="@+id/problema_fisico"

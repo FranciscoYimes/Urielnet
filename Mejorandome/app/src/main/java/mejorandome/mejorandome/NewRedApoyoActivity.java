@@ -1,14 +1,13 @@
 package mejorandome.mejorandome;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.SoapFault;
@@ -21,72 +20,63 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
-import mejorandome.mejorandome.Adapters.Utils;
+public class NewRedApoyoActivity extends AppCompatActivity {
 
-public class LoginActivity extends AppCompatActivity {
-
-    private Button loginButton;
-    private TextView forgotPassword;
-    private int respuesta;
-    private String userNameText;
-    private String passText;
-    private Utils utils;
-    private EditText userName;
-    private EditText pass;
+    private Button addRedButton;
+    private EditText name;
+    private EditText number;
+    private String nameString;
+    private String numberString;
+    private int idPaciente;
+    private boolean response;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_new_red_apoyo);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        loginButton = (Button) findViewById(R.id.login_button);
-        forgotPassword = (TextView) findViewById(R.id.forgot_password);
+        addRedButton = (Button) findViewById(R.id.add_red_button);
+        name = (EditText) findViewById(R.id.name);
+        number = (EditText) findViewById(R.id.number);
 
-        utils = new Utils();
+        idPaciente = getIntent().getIntExtra("idPaciente",0);
 
-        userName = (EditText) findViewById(R.id.login_username);
-        pass = (EditText) findViewById(R.id.login_password);
-
-        loginButton.setOnClickListener(new View.OnClickListener() {
+        addRedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                nameString = name.getText().toString();
+                numberString = number.getText().toString();
 
-                if(userName.getText().toString().equals("") || pass.getText().toString().equals(""))
+                if(nameString.equals("") || numberString.equals(""))
                 {
-                    ShowWrongData();
+                    Toast toast = Toast.makeText(NewRedApoyoActivity.this, "Debes ingresar los datos solicitados", Toast.LENGTH_SHORT);
+                    toast.show();
                 }
                 else
                 {
-                    userNameText = userName.getText().toString();
-                    passText = pass.getText().toString();
-                    new sendLogginInfo().execute();
+                    new AddRedApoyo().execute();
                 }
-            }
-        });
-
-        forgotPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
             }
         });
     }
 
-    private class sendLogginInfo extends AsyncTask<Void,Void,Void>
+    private class AddRedApoyo extends AsyncTask<Void,Void,Void>
     {
         SoapPrimitive resultado;
         @Override
         protected Void doInBackground(Void... params) {
             final String NAMESPACE = "http://tempuri.org/";
             final String URL = "http://www.mejorandome.com/servicio/Service1.svc";
-            final String METHOD_NAME = "login";
-            final String SOAP_ACTION = "http://tempuri.org/IService1/login";
+            final String METHOD_NAME = "InsertrecordNetworkSupport";
+            final String SOAP_ACTION = "http://tempuri.org/IService1/InsertrecordNetworkSupport";
             String Error;
             try {
                 SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-                request.addProperty("username", userNameText); // Paso parametros al WS
-                request.addProperty("password", passText); // Paso parametros al WS
-                request.addProperty("macAddress",utils.getMACAddress("wlan0"));
+                request.addProperty("idPaciente", idPaciente); // Paso parametros al WS
+                request.addProperty("nombre", nameString); // Paso parametros al WS
+                request.addProperty("numeroTelefono", numberString); // Paso parametros al WS
 
                 SoapSerializationEnvelope sobre = new SoapSerializationEnvelope(SoapEnvelope.VER11);
                 sobre.dotNet = true;
@@ -98,53 +88,49 @@ public class LoginActivity extends AppCompatActivity {
 
                 resultado = (SoapPrimitive) sobre.getResponse();
 
-                Log.i("Resultado", resultado.toString());
-
-                respuesta = Integer.parseInt(resultado.toString());
-
-
             } catch (MalformedURLException e) {
                 e.printStackTrace();
                 Error = e.toString();
-                respuesta = -2;
+
 
             } catch (SoapFault soapFault) {
                 soapFault.printStackTrace();
                 Error = soapFault.toString();
-                respuesta = -2;
+
 
             } catch (XmlPullParserException e) {
                 e.printStackTrace();
                 Error = e.toString();
-                respuesta = -2;
+
 
             } catch (IOException e) {
                 e.printStackTrace();
                 Error = e.toString();
-                respuesta = -2;
+
             }
 
             return null;
         }
         protected void onPostExecute(Void result)
         {
-            if(respuesta > 0)
+            if(resultado!=null)
             {
-                Intent i = new Intent(LoginActivity.this,MainActivity.class);
-                i.putExtra("id",respuesta);
-                startActivity(i);
+                response = Boolean.parseBoolean(resultado.toString());
+            }
+            else response = false;
+
+            if(response)
+            {
+                Toast toast = Toast.makeText(NewRedApoyoActivity.this, "Se ha agregado a la Red de Apoyo", Toast.LENGTH_SHORT);
+                toast.show();
                 finish();
             }
             else
             {
-                ShowWrongData();
+                Toast toast = Toast.makeText(NewRedApoyoActivity.this, "Error al registrar.", Toast.LENGTH_SHORT);
+                toast.show();
             }
             super.onPostExecute(result);
         }
-    }
-
-    public void ShowWrongData()
-    {
-
     }
 }

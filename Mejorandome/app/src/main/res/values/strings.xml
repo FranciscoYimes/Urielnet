@@ -10,4 +10,6 @@
     <string name="title_activity_goals">GoalsActivity</string>
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="title_activity_past_meeting">PastMeetingActivity</string>
+    <string name="title_activity_red_apoyo">RedApoyoActivity</string>
+    <string name="title_activity_new_red_apoyo">NewRedApoyoActivity</string>
 </resources>

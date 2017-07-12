@@ -1,12 +1,14 @@
 package mejorandome.mejorandome;
 
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,8 +44,6 @@ public class DashboardFragment extends Fragment {
     private TextView dateText;
     private TextView logros;
     private TextView inasistencias;
-    private TextView nombrePacienteText;
-    private TextView nombreCentroText;
     private Button meetingButton;
     private Button moodButton;
     private Button goalsButton;
@@ -52,6 +52,7 @@ public class DashboardFragment extends Fragment {
     private int positiveEmotions;
     private int negativeEmotions;
     private int idPaciente;
+    private boolean privacidadAlta;
     private Intent intent;
 
     String meses[] = {"Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto"," ;Septiembre","Octubre","Noviembre","Diciemrbre"};
@@ -67,8 +68,6 @@ public class DashboardFragment extends Fragment {
         logros = (TextView) rootView.findViewById(R.id.logros);
         inasistencias = (TextView) rootView.findViewById(R.id.inasistencias);
         dateText = (TextView) rootView.findViewById(R.id.dateText);
-        nombrePacienteText = (TextView) rootView.findViewById(R.id.nombre_paciente);
-        nombreCentroText = (TextView) rootView.findViewById(R.id.nombre_centro);
         moodButton = (Button) rootView.findViewById(R.id.mood_button);
         meetingButton = (Button) rootView.findViewById(R.id.citas);
         goalsButton = (Button) rootView.findViewById(R.id.goalsButton);
@@ -85,7 +84,7 @@ public class DashboardFragment extends Fragment {
 
         new getUserData().execute();
 
-        //new getMoodStatus().execute();
+        new getMoodStatus().execute();
 
         moodButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,9 +116,7 @@ public class DashboardFragment extends Fragment {
         sosButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GetSosMessage();
-                intent = new Intent(getActivity(),PostSOSActivity.class);
-                startActivity(intent);
+                AlertMessage().show();
             }
         });
 
@@ -318,8 +315,8 @@ public class DashboardFragment extends Fragment {
     public void GetSosMessage()
     {
         sendSMS("+56974785845","Francisco");
-        sendSMS("+56967864621","Gabriel");
-        sendSMS("+56961590408","Pilar");
+        //sendSMS("+56967864621","Gabriel");
+        //sendSMS("+56961590408","Pilar");
     }
 
     private void sendSMS(String phone, String name) {
@@ -360,8 +357,6 @@ public class DashboardFragment extends Fragment {
                 resultado = (SoapPrimitive) sobre.getResponse();
 
                 Log.i("Resultado", resultado.toString());
-
-
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -407,12 +402,13 @@ public class DashboardFragment extends Fragment {
     private class getUserData extends AsyncTask<Void,Void,Void>
     {
         SoapObject resultado;
+        SoapPrimitive logrosRes;
         @Override
         protected Void doInBackground(Void... params) {
             final String NAMESPACE = "http://tempuri.org/";
             final String URL = "http://www.mejorandome.com/servicio/Service1.svc";
-            final String METHOD_NAME = "getUserData";
-            final String SOAP_ACTION = "http://tempuri.org/IService1/getUserData";
+            final String METHOD_NAME = "ObjectPaciente";
+            final String SOAP_ACTION = "http://tempuri.org/IService1/ObjectPaciente";
             String Error;
             try {
                 SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
@@ -428,9 +424,12 @@ public class DashboardFragment extends Fragment {
 
                 resultado = (SoapObject) sobre.getResponse();
 
+
+                resultado = (SoapObject) resultado.getProperty(0);
+                logrosRes = (SoapPrimitive) resultado.getProperty(1);
+                resultado = (SoapObject) resultado.getProperty(0);
+
                 Log.i("Resultado", resultado.toString());
-
-
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -448,25 +447,46 @@ public class DashboardFragment extends Fragment {
                 e.printStackTrace();
                 Error = e.toString();
             }
-
             return null;
         }
         protected void onPostExecute(Void result)
         {
             if(resultado!=null)
             {
-                logros.setText(resultado.getProperty("Logros").toString());
+                logros.setText(logrosRes.toString());
                 inasistencias.setText(resultado.getProperty("InasistenciasSeguidas").toString());
             }
             else
             {
-                logros.setText("0");
-                inasistencias.setText("0");
-                nombrePacienteText.setText("FcoYimes");
-                nombreCentroText.setText("La Roca");
+                logros.setText("Error");
+                inasistencias.setText("Error");
             }
 
             super.onPostExecute(result);
         }
+    }
+    public AlertDialog AlertMessage() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        builder.setTitle("SOS")
+                .setMessage("Se enviará un mensaje de alerta a tu Red de Apoyo")
+                .setPositiveButton("OK",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                GetSosMessage();
+                                intent = new Intent(getActivity(),PostSOSActivity.class);
+                                startActivity(intent);
+                            }
+                        })
+                .setNegativeButton("CANCELAR",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+
+        return builder.create();
     }
 }
