@@ -79,7 +79,7 @@ public class RedApoyoActivity extends AppCompatActivity {
                 Intent intent = new Intent(RedApoyoActivity.this, NewRedApoyoActivity.class);
                 intent.putExtra("idPaciente",idPaciente);
                 startActivity(intent);
-
+                finish();
             }
         });
     }

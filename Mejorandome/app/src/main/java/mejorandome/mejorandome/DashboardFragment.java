@@ -3,13 +3,10 @@ package mejorandome.mejorandome;
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -312,26 +309,6 @@ public class DashboardFragment extends Fragment {
         return fechaFinal;
     }
 
-    public void GetSosMessage()
-    {
-        sendSMS("+56974785845","Francisco");
-        //sendSMS("+56967864621","Gabriel");
-        //sendSMS("+56961590408","Pilar");
-    }
-
-    private void sendSMS(String phone, String name) {
-        int permissionCheck = ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.SEND_SMS);
-
-        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-            Log.i("Mensaje", "No se tiene permiso para enviar SMS.");
-            ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.SEND_SMS}, 225);
-        } else {
-            SmsManager sms = SmsManager.getDefault();
-            String message = "Estimado/a "+name+", nuestro paciente ha activado un mensaje de alerta, rogamos ponerse en contacto de inmediato.";
-            sms.sendTextMessage(phone, null, message , null, null);
-        }
-    }
-
     private class getMoodStatus extends AsyncTask<Void,Void,Void>
     {
         SoapPrimitive resultado;
@@ -474,8 +451,8 @@ public class DashboardFragment extends Fragment {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                GetSosMessage();
                                 intent = new Intent(getActivity(),PostSOSActivity.class);
+                                intent.putExtra("idPaciente",idPaciente);
                                 startActivity(intent);
                             }
                         })

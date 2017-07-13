@@ -24,47 +24,50 @@
             android:layout_height="match_parent">
 
             <LinearLayout
-                android:layout_marginLeft="10dp"
-                android:layout_marginBottom="10dp"
                 android:visibility="gone"
+                android:layout_marginBottom="10dp"
                 android:id="@+id/goal_layout"
                 android:background="#fff"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <LinearLayout
-                    android:id="@+id/text_layout"
-                    android:layout_gravity="center_vertical"
-                    android:orientation="vertical"
-                    android:layout_width="240dp"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_marginLeft="20dp"
-                        android:textSize="30dp"
-                        android:layout_gravity="center_vertical"
-                        android:text="Bajar de Peso"
-                        android:textColor="@color/color_green"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:layout_marginLeft="20dp"
-                        android:textSize="20dp"
-                        android:layout_gravity="center_vertical"
-                        android:text="Debes bajar 4 kilos en un mes, es importante controlar la ansiedad"
-                        android:textColor="@color/colorPrimary"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                </LinearLayout>
-
                 <ImageView
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/goal_icon_0"
                     android:id="@+id/goal_star"
                     android:layout_gravity="center_vertical"
                     android:layout_width="50dp"
                     android:layout_height="50dp" />
+
+                <LinearLayout
+                    android:layout_marginLeft="15dp"
+                    android:id="@+id/text_layout"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/title_goal"
+                        android:textSize="20dp"
+                        android:layout_gravity="center_vertical"
+                        android:text="Bajar de Peso"
+                        android:textColor="#000"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/description_goal"
+                        android:textSize="15dp"
+                        android:text="Debes bajar 4 kilos en un mes, es importante controlar la ansiedad"
+                        android:textColor="#757b80"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
 
             </LinearLayout>
 

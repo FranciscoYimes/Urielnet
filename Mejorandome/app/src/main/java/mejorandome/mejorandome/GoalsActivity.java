@@ -27,6 +27,8 @@ public class GoalsActivity extends AppCompatActivity {
     private LinearLayout goalLayout;
     private LinearLayout textLayout;
     private ImageView imageViewStar;
+    private TextView titleExample;
+    private TextView descExample;
     private Toolbar mToolbar;
     private int idPaciente;
 
@@ -47,6 +49,8 @@ public class GoalsActivity extends AppCompatActivity {
         goalLayout = (LinearLayout) findViewById(R.id.goal_layout);
         textLayout = (LinearLayout) findViewById(R.id.text_layout);
         imageViewStar = (ImageView) findViewById(R.id.goal_star);
+        titleExample = (TextView) findViewById(R.id.title_goal);
+        descExample = (TextView) findViewById(R.id.description_goal);
 
         new GetGoals().execute();
 
@@ -64,54 +68,51 @@ public class GoalsActivity extends AppCompatActivity {
         LinearLayout contentLayout = new LinearLayout(getApplicationContext());
         LinearLayout newTextLayout = new LinearLayout(getApplicationContext());
         ImageView newImageView = new ImageView(getApplicationContext());
-        LinearLayout line = new LinearLayout(getApplicationContext());
         LinearLayout.LayoutParams lineLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,2);
 
         contentLayout.setLayoutParams(goalLayout.getLayoutParams());
         newTextLayout.setLayoutParams(textLayout.getLayoutParams());
         newImageView.setLayoutParams(imageViewStar.getLayoutParams());
 
+        contentLayout.setBackgroundColor(Color.WHITE);
+
         TextView title = new TextView(getApplicationContext());
         TextView description = new TextView(getApplicationContext());
 
-        title.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        title.setLayoutParams(titleExample.getLayoutParams());
         description.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        title.setTextColor(getResources().getColor(R.color.color_green));
-        description.setTextColor(getResources().getColor(R.color.colorPrimary));
+        title.setTextColor(Color.BLACK);
+        description.setTextColor(Color.parseColor("#757b80"));
 
-        if(Boolean.parseBoolean(newGoal.getProperty("Estado").toString()))
+        if(!Boolean.parseBoolean(newGoal.getProperty("Estado").toString()))
         {
-            newImageView.setBackground(getResources().getDrawable(R.drawable.grey_star_icon));
+            newImageView.setBackground(getResources().getDrawable(R.drawable.goal_icon_1));
         }
         else
         {
-            newImageView.setBackground(getResources().getDrawable(R.drawable.star_icon));
+            newImageView.setBackground(getResources().getDrawable(R.drawable.goal_icon_0));
         }
 
         contentLayout.setOrientation(LinearLayout.HORIZONTAL);
         newTextLayout.setOrientation(LinearLayout.VERTICAL);
 
-        line.setLayoutParams(lineLayoutParams);
-        line.setBackgroundColor(Color.parseColor("#B0B0B0"));
+        title.setTextSize(20);
+        description.setTextSize(15);
 
-        title.setTextSize(30);
-        description.setTextSize(20);
-
-        title.setLeft(20);
+        //title.setLeft(20);
         description.setLeft(20);
 
         if(newGoal.getProperty("Objetivo")!=null) title.setText(newGoal.getProperty("Objetivo").toString());
-        description.setText("Debes bajar 4 kilos en 2 semanas");
+        if(newGoal.getProperty("Descripcion")!=null) description.setText(newGoal.getProperty("Descripcion").toString());
 
         newTextLayout.addView(title);
         newTextLayout.addView(description);
 
-        contentLayout.addView(newTextLayout);
         contentLayout.addView(newImageView);
+        contentLayout.addView(newTextLayout);
 
         goalContent.addView(contentLayout);
-        goalContent.addView(line);
 
     }
 
@@ -176,7 +177,6 @@ public class GoalsActivity extends AppCompatActivity {
                     {
                         SoapObject meeting = (SoapObject) meetingList;
                         AddGoals(meeting);
-
                     }
                 }
             }

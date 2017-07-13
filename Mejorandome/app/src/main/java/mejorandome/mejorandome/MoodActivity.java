@@ -25,8 +25,6 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
-import mejorandome.mejorandome.SeekBarClasses.RangeSliderView;
-
 public class MoodActivity extends AppCompatActivity {
 
     private Button saveButton;
@@ -43,14 +41,14 @@ public class MoodActivity extends AppCompatActivity {
     private TextView statusN3;
     private TextView statusN4;
     private SeekBar seekP1;
-    private RangeSliderView seekP2;
-    private RangeSliderView seekP3;
-    private RangeSliderView seekP4;
-    private RangeSliderView seekN1;
-    private RangeSliderView seekN2;
-    private RangeSliderView seekN3;
-    private RangeSliderView seekN4;
-    private RangeSliderView drugSeek;
+    private SeekBar seekP2;
+    private SeekBar seekP3;
+    private SeekBar seekP4;
+    private SeekBar seekN1;
+    private SeekBar seekN2;
+    private SeekBar seekN3;
+    private SeekBar seekN4;
+    private SeekBar drugSeek;
     private Switch drugCheck;
     private LinearLayout abstinenciaLayout;
     private LinearLayout sinAbstinenciaLayout;
@@ -87,15 +85,15 @@ public class MoodActivity extends AppCompatActivity {
         statusN4 = (TextView) findViewById(R.id.estadoN4_text);
 
         seekP1 = (SeekBar) findViewById(R.id.estadoP1_seek);
-        seekP2 = (RangeSliderView) findViewById(R.id.estadoP2_seek);
-        seekP3 = (RangeSliderView) findViewById(R.id.estadoP3_seek);
-        seekP4 = (RangeSliderView) findViewById(R.id.estadoP4_seek);
-        seekN1 = (RangeSliderView) findViewById(R.id.estadoN1_seek);
-        seekN2 = (RangeSliderView) findViewById(R.id.estadoN2_seek);
-        seekN3 = (RangeSliderView) findViewById(R.id.estadoN3_seek);
-        seekN4 = (RangeSliderView) findViewById(R.id.estadoN4_seek);
+        seekP2 = (SeekBar) findViewById(R.id.estadoP2_seek);
+        seekP3 = (SeekBar) findViewById(R.id.estadoP3_seek);
+        seekP4 = (SeekBar) findViewById(R.id.estadoP4_seek);
+        seekN1 = (SeekBar) findViewById(R.id.estadoN1_seek);
+        seekN2 = (SeekBar) findViewById(R.id.estadoN2_seek);
+        seekN3 = (SeekBar) findViewById(R.id.estadoN3_seek);
+        seekN4 = (SeekBar) findViewById(R.id.estadoN4_seek);
 
-        drugSeek = (RangeSliderView) findViewById(R.id.consumo_seek);
+        drugSeek = (SeekBar) findViewById(R.id.consumo_seek);
         drugCheck = (Switch) findViewById(R.id.drugCheck);
 
         pesoText = (EditText) findViewById(R.id.peso);
@@ -234,7 +232,7 @@ public class MoodActivity extends AppCompatActivity {
             statusN3.setText(mood.getProperty("NombreEstado7").toString());
         }
 
-        if(true)   // Abstinencia completa
+        if(false)   // Abstinencia completa
         {
             sinAbstinenciaLayout.setVisibility(View.GONE);
             abstinenciaLayout.setVisibility(View.VISIBLE);
@@ -261,17 +259,17 @@ public class MoodActivity extends AppCompatActivity {
             }
             else
             {
-                consumo = drugSeek.getIndex();
+                consumo = drugSeek.getProgress();
             }
 
             estadoP1 = seekP1.getProgress();
-            estadoP2 = seekP2.getIndex();
-            estadoP3 = seekP3.getIndex();
-            estadoP4 = seekP4.getIndex();
-            estadoN1 = seekN1.getIndex();
-            estadoN2 = seekN2.getIndex();
-            estadoN3 = seekN3.getIndex();
-            estadoN4 = seekN4.getIndex();
+            estadoP2 = seekP2.getProgress();
+            estadoP3 = seekP3.getProgress();
+            estadoP4 = seekP4.getProgress();
+            estadoN1 = seekN1.getProgress();
+            estadoN2 = seekN2.getProgress();
+            estadoN3 = seekN3.getProgress();
+            estadoN4 = seekN4.getProgress();
 
             problemaFisico = problemaFisicoText.getText().toString();
 

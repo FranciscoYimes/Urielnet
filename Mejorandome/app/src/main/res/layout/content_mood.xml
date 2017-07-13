@@ -55,11 +55,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <mejorandome.mejorandome.SeekBarClasses.RangeSliderView
+                <SeekBar
+                    android:maxHeight="50dp"
                     android:id="@+id/estadoP2_seek"
-                    rsv:filledColor="@color/colorAccent"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp" />
+                    android:layout_height="20dp"
+                    android:max="10"
+                    android:theme="@style/Widget.AppCompat.SeekBar.Discrete" />
 
                 <TextView
                     android:id="@+id/estadoP3_text"
@@ -70,11 +72,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <mejorandome.mejorandome.SeekBarClasses.RangeSliderView
+                <SeekBar
+                    android:maxHeight="50dp"
                     android:id="@+id/estadoP3_seek"
-                    rsv:filledColor="#FFD700"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp" />
+                    android:layout_height="20dp"
+                    android:max="10"
+                    android:theme="@style/Widget.AppCompat.SeekBar.Discrete" />
 
                 <TextView
                     android:id="@+id/estadoP4_text"
@@ -85,11 +89,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <mejorandome.mejorandome.SeekBarClasses.RangeSliderView
+                <SeekBar
+                    android:maxHeight="50dp"
                     android:id="@+id/estadoP4_seek"
-                    rsv:filledColor="#FFD700"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp" />
+                    android:layout_height="20dp"
+                    android:max="10"
+                    android:theme="@style/Widget.AppCompat.SeekBar.Discrete" />
 
                 <TextView
                     android:id="@+id/estadoN1_text"
@@ -100,11 +106,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <mejorandome.mejorandome.SeekBarClasses.RangeSliderView
+                <SeekBar
+                    android:maxHeight="50dp"
                     android:id="@+id/estadoN1_seek"
-                    rsv:filledColor="@color/color_red"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp" />
+                    android:layout_height="20dp"
+                    android:max="10"
+                    android:theme="@style/Widget.AppCompat.SeekBar.Discrete" />
 
                 <TextView
                     android:id="@+id/estadoN2_text"
@@ -115,11 +123,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <mejorandome.mejorandome.SeekBarClasses.RangeSliderView
+                <SeekBar
+                    android:maxHeight="50dp"
                     android:id="@+id/estadoN2_seek"
-                    rsv:filledColor="#F37506"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp" />
+                    android:layout_height="20dp"
+                    android:max="10"
+                    android:theme="@style/Widget.AppCompat.SeekBar.Discrete" />
 
                 <TextView
                     android:id="@+id/estadoN3_text"
@@ -130,10 +140,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <mejorandome.mejorandome.SeekBarClasses.RangeSliderView
+                <SeekBar
+                    android:maxHeight="50dp"
                     android:id="@+id/estadoN3_seek"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp" />
+                    android:layout_height="20dp"
+                    android:max="10"
+                    android:theme="@style/Widget.AppCompat.SeekBar.Discrete" />
 
                 <TextView
                     android:id="@+id/estadoN4_text"
@@ -144,10 +157,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <mejorandome.mejorandome.SeekBarClasses.RangeSliderView
+                <SeekBar
+                    android:maxHeight="50dp"
                     android:id="@+id/estadoN4_seek"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp" />
+                    android:layout_height="20dp"
+                    android:max="10"
+                    android:theme="@style/Widget.AppCompat.SeekBar.Discrete" />
 
                 <EditText
                     android:layout_marginTop="30dp"
@@ -164,6 +180,7 @@
                     android:inputType="number" />
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:layout_gravity="center_horizontal"
                     android:id="@+id/consumo_abstinencia"
                     android:layout_marginTop="30dp"
@@ -190,7 +207,6 @@
 
                 <LinearLayout
                     android:id="@+id/consumo_sin_abstinencia"
-                    android:visibility="gone"
                     android:layout_marginTop="30dp"
                     android:layout_gravity="center_horizontal"
                     android:orientation="vertical"
@@ -202,14 +218,26 @@
                         android:layout_marginLeft="5dp"
                         android:textSize="18dp"
                         android:textColor="@color/colorAccent"
-                        android:text="¿Cuanto has consumido hoy?"
+                        android:text="¿Has consumido hoy?"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
-                    <mejorandome.mejorandome.SeekBarClasses.RangeSliderView
+                    <TextView
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="5dp"
+                        android:textSize="18dp"
+                        android:textColor="@color/colorAccent"
+                        android:text="¿Cuanto?"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <SeekBar
+                        android:maxHeight="50dp"
                         android:id="@+id/consumo_seek"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp" />
+                        android:layout_height="20dp"
+                        android:max="10"
+                        android:theme="@style/Widget.AppCompat.SeekBar.Discrete" />
 
                 </LinearLayout>
 
