@@ -11,6 +11,16 @@
         <item name="android:textColor">#fff</item>
     </style>
 
+    <style name="AppTheme2" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColor">#000</item>
+    </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -25,6 +35,13 @@
         <item name="colorPrimaryDark">#fff</item>
         <item name="colorAccent">#fff</item>
         <item name="android:textColor">#fff</item>
+    </style>
+
+    <style name="Spinner">
+        <item name="colorPrimary">#fff</item>
+        <item name="colorPrimaryDark">#fff</item>
+        <item name="colorAccent">#fff</item>
+        <item name="android:textColor">#000</item>
     </style>
 
 

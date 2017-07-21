@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -21,6 +23,7 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
+import mejorandome.mejorandome.Adapters.SimpleProgressDialog;
 import mejorandome.mejorandome.Adapters.Utils;
 
 public class LoginActivity extends AppCompatActivity {
@@ -33,6 +36,8 @@ public class LoginActivity extends AppCompatActivity {
     private Utils utils;
     private EditText userName;
     private EditText pass;
+    private Animation shake;
+    private SimpleProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +49,13 @@ public class LoginActivity extends AppCompatActivity {
 
         utils = new Utils();
 
+        dialog = SimpleProgressDialog.build(this, "Cargando...");
+
+
         userName = (EditText) findViewById(R.id.login_username);
         pass = (EditText) findViewById(R.id.login_password);
+
+        shake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +92,7 @@ public class LoginActivity extends AppCompatActivity {
             final String METHOD_NAME = "login";
             final String SOAP_ACTION = "http://tempuri.org/IService1/login";
             String Error;
+            dialog.show();
             try {
                 SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
                 request.addProperty("username", userNameText); // Paso parametros al WS
@@ -128,6 +139,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         protected void onPostExecute(Void result)
         {
+            dialog.dismiss();
             if(respuesta > 0)
             {
                 Intent i = new Intent(LoginActivity.this,MainActivity.class);
@@ -145,6 +157,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void ShowWrongData()
     {
-
+        userName.startAnimation(shake);
+        pass.startAnimation(shake);
     }
 }

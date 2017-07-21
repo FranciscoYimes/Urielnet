@@ -25,6 +25,8 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
+import mejorandome.mejorandome.Adapters.SimpleProgressDialog;
+
 public class MoodActivity extends AppCompatActivity {
 
     private Button saveButton;
@@ -59,6 +61,7 @@ public class MoodActivity extends AppCompatActivity {
     private String problemaFisico;
     private boolean abstinencia;
     private boolean response;
+    private SimpleProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +75,8 @@ public class MoodActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         idPaciente = getIntent().getIntExtra("idPaciente",0);
+
+        dialog = SimpleProgressDialog.build(this, "Cargando...");
 
         saveButton = (Button) findViewById(R.id.save_mood_button);
 
@@ -130,6 +135,7 @@ public class MoodActivity extends AppCompatActivity {
             final String METHOD_NAME = "Mood";
             final String SOAP_ACTION = "http://tempuri.org/IService1/Mood";
             String Error;
+            dialog.show();
             try {
                 SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
                 request.addProperty("idPaciente", idPaciente); // Paso parametros al WS
@@ -179,6 +185,7 @@ public class MoodActivity extends AppCompatActivity {
             {
 
             }
+            dialog.dismiss();
             super.onPostExecute(result);
         }
     }

@@ -21,6 +21,8 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
+import mejorandome.mejorandome.Adapters.SimpleProgressDialog;
+
 public class GoalsActivity extends AppCompatActivity {
 
     private LinearLayout goalContent;
@@ -31,6 +33,8 @@ public class GoalsActivity extends AppCompatActivity {
     private TextView descExample;
     private Toolbar mToolbar;
     private int idPaciente;
+    private SimpleProgressDialog dialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,8 @@ public class GoalsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         idPaciente = getIntent().getIntExtra("idPaciente",0);
+
+        dialog = SimpleProgressDialog.build(this, "Cargando...");
 
         mToolbar= (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
@@ -121,11 +127,13 @@ public class GoalsActivity extends AppCompatActivity {
         SoapObject resultado;
         @Override
         protected Void doInBackground(Void... params) {
+
             final String NAMESPACE = "http://tempuri.org/";
             final String URL = "http://www.mejorandome.com/servicio/Service1.svc";
             final String METHOD_NAME = "PatientObjectives";
             final String SOAP_ACTION = "http://tempuri.org/IService1/PatientObjectives";
             String Error;
+            dialog.show();
             try {
                 SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
                 request.addProperty("idPaciente", idPaciente); // Paso parametros al WS
@@ -165,6 +173,7 @@ public class GoalsActivity extends AppCompatActivity {
         }
         protected void onPostExecute(Void result)
         {
+
             if(resultado!=null)
             {
                 Object meetingList;
@@ -184,6 +193,9 @@ public class GoalsActivity extends AppCompatActivity {
             {
 
             }
+
+            dialog.dismiss();
+
             super.onPostExecute(result);
         }
     }

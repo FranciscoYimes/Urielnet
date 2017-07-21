@@ -23,6 +23,8 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
+import mejorandome.mejorandome.Adapters.SimpleProgressDialog;
+
 public class MeetingActivity extends AppCompatActivity {
 
     private Toolbar mToolbar;
@@ -33,8 +35,10 @@ public class MeetingActivity extends AppCompatActivity {
     private TextView hourExample;
     private TextView docExample;
     private TextView ocupationExapmle;
+    private TextView citasNull;
     private ImageView calendarExample;
     private Button pastMeetingButton;
+    private SimpleProgressDialog dialog;
     String meses[] = {"Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto"," ;Septiembre","Octubre","Noviembre","Diciemrbre"};
 
     @Override
@@ -56,8 +60,11 @@ public class MeetingActivity extends AppCompatActivity {
         calendarExample = (ImageView) findViewById(R.id.calendar_example);
         pastMeetingButton = (Button) findViewById(R.id.past_meeting_button);
         ocupationExapmle = (TextView) findViewById(R.id.ocupation_example);
+        citasNull = (TextView) findViewById(R.id.citas_null);
 
         idPaciente = getIntent().getIntExtra("idPaciente",0);
+
+        dialog = SimpleProgressDialog.build(this, "Cargando...");
 
         pastMeetingButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,6 +95,7 @@ public class MeetingActivity extends AppCompatActivity {
             final String METHOD_NAME = "TotalNextMeeting";
             final String SOAP_ACTION = "http://tempuri.org/IService1/TotalNextMeeting";
             String Error;
+            dialog.show();
             try {
                 SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
                 request.addProperty("idPaciente", idPaciente); // Paso parametros al WS
@@ -145,8 +153,9 @@ public class MeetingActivity extends AppCompatActivity {
             }
             else
             {
-
+                citasNull.setVisibility(View.VISIBLE);
             }
+            dialog.dismiss();
             super.onPostExecute(result);
         }
     }

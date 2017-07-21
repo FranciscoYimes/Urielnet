@@ -1,7 +1,11 @@
 package mejorandome.mejorandome;
 
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -23,12 +27,19 @@ import java.net.MalformedURLException;
 public class NewRedApoyoActivity extends AppCompatActivity {
 
     private Button addRedButton;
+    private Button searchContact;
     private EditText name;
     private EditText number;
     private String nameString;
     private String numberString;
     private int idPaciente;
     private boolean response;
+    private Uri datos;
+    private Toolbar mToolbar;
+
+    static final int PICK_CONTACT_REQUEST = 1;
+
+    private static final int REQUEST_CHOOSE_PHONE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +48,19 @@ public class NewRedApoyoActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        mToolbar= (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         addRedButton = (Button) findViewById(R.id.add_red_button);
+        searchContact = (Button) findViewById(R.id.search_contact);
         name = (EditText) findViewById(R.id.name);
         number = (EditText) findViewById(R.id.number);
 
@@ -58,6 +81,15 @@ public class NewRedApoyoActivity extends AppCompatActivity {
                 {
                     new AddRedApoyo().execute();
                 }
+            }
+        });
+
+        searchContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent pickContactIntent = new Intent(Intent.ACTION_PICK, Uri.parse("content://contacts"));
+                pickContactIntent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE); // Show user only contacts w/ phone numbers
+                startActivityForResult(pickContactIntent, PICK_CONTACT_REQUEST);
             }
         });
     }
@@ -131,6 +163,29 @@ public class NewRedApoyoActivity extends AppCompatActivity {
                 toast.show();
             }
             super.onPostExecute(result);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == PICK_CONTACT_REQUEST) {
+
+            if (resultCode == RESULT_OK) {
+
+                Uri contactUri = data.getData();
+
+                String[] projection = {ContactsContract.CommonDataKinds.Phone.NUMBER};
+
+                Cursor cursor = getContentResolver()
+                        .query(contactUri, projection, null, null, null);
+                cursor.moveToFirst();
+
+                int column = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+                String numberData = cursor.getString(column);
+
+                number.setText(numberData);
+            }
         }
     }
 }

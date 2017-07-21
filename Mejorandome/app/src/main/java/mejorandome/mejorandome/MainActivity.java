@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.dashboard) {
             fragmentManager.beginTransaction().replace(R.id.content_frame,new DashboardFragment()).commit();
         } else if (id == R.id.mood) {
-            Intent intent = new Intent(MainActivity.this,MoodActivity.class);
+            Intent intent = new Intent(MainActivity.this,ConsumoActivity.class);
             intent.putExtra("idPaciente",idPaciente);
             startActivity(intent);
         } else if (id == R.id.settings) {

@@ -27,6 +27,8 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
+import mejorandome.mejorandome.Adapters.SimpleProgressDialog;
+
 public class RedApoyoActivity extends AppCompatActivity {
 
     private FloatingActionButton fab;
@@ -40,6 +42,7 @@ public class RedApoyoActivity extends AppCompatActivity {
     private int idPaciente;
     private int idRedApoyo;
     private boolean response;
+    private SimpleProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,7 @@ public class RedApoyoActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         idPaciente = getIntent().getIntExtra("idPaciente",0);
+        dialog = SimpleProgressDialog.build(this, "Cargando...");
 
         mToolbar= (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
@@ -152,6 +156,7 @@ public class RedApoyoActivity extends AppCompatActivity {
             final String METHOD_NAME = "PatientNetworkSupport";
             final String SOAP_ACTION = "http://tempuri.org/IService1/PatientNetworkSupport";
             String Error;
+            dialog.show();
             try {
                 SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
                 request.addProperty("idPaciente", idPaciente); // Paso parametros al WS
@@ -211,6 +216,7 @@ public class RedApoyoActivity extends AppCompatActivity {
             {
 
             }
+            dialog.dismiss();
             super.onPostExecute(result);
         }
     }
@@ -248,6 +254,7 @@ public class RedApoyoActivity extends AppCompatActivity {
             final String METHOD_NAME = "DeleteNetworkSupport";
             final String SOAP_ACTION = "http://tempuri.org/IService1/DeleteNetworkSupport";
             String Error;
+            dialog.show();
             try {
                 SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
                 request.addProperty("idPaciente", idPaciente); // Paso parametros al WS
@@ -288,6 +295,8 @@ public class RedApoyoActivity extends AppCompatActivity {
         }
         protected void onPostExecute(Void result)
         {
+            dialog.dismiss();
+
             if(resultado!=null)
             {
                 response = Boolean.parseBoolean(resultado.toString());
@@ -308,5 +317,4 @@ public class RedApoyoActivity extends AppCompatActivity {
             super.onPostExecute(result);
         }
     }
-
 }

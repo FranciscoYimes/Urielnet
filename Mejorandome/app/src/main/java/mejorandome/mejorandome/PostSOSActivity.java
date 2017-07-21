@@ -25,6 +25,8 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
+import mejorandome.mejorandome.Adapters.SimpleProgressDialog;
+
 public class PostSOSActivity extends AppCompatActivity {
 
     private ImageView image1;
@@ -35,6 +37,7 @@ public class PostSOSActivity extends AppCompatActivity {
     private LinearLayout objetivoExample;
     private TextView objetivoTextExample;
     private int idPaciente;
+    private SimpleProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +50,7 @@ public class PostSOSActivity extends AppCompatActivity {
         objetivoExample = (LinearLayout) findViewById(R.id.objetivo_example);
         objetivoTextExample = (TextView) findViewById(R.id.objetivo_text_example);
 
-        new GetGoals().execute();
-        new GetRedApoyo().execute();
+        dialog = SimpleProgressDialog.build(this, "Cargando...");
 
         image1 = (ImageView) findViewById(R.id.image1);
         image2 = (ImageView) findViewById(R.id.image2);
@@ -59,6 +61,9 @@ public class PostSOSActivity extends AppCompatActivity {
         Ion.with(image2).load("http://www.fcs-midland.org/images/gui/family%20of%20four.jpg");
         Ion.with(image3).load("https://www.tripleoklaw.com/wp-content/uploads/2015/11/Family-Law-Image-800x600.jpg");
         Ion.with(image4).load("http://www.sbmegastudy.com/wp-content/uploads/2016/03/family-trip.jpg");
+
+        new GetGoals().execute();
+        new GetRedApoyo().execute();
     }
 
     public void AddGoals(SoapObject goal)
@@ -167,6 +172,7 @@ public class PostSOSActivity extends AppCompatActivity {
             final String METHOD_NAME = "PatientNetworkSupport";
             final String SOAP_ACTION = "http://tempuri.org/IService1/PatientNetworkSupport";
             String Error;
+            dialog.show();
             try {
                 SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
                 request.addProperty("idPaciente", idPaciente); // Paso parametros al WS
@@ -226,6 +232,7 @@ public class PostSOSActivity extends AppCompatActivity {
             {
 
             }
+            dialog.dismiss();
             super.onPostExecute(result);
         }
     }

@@ -12,4 +12,20 @@
     <string name="title_activity_past_meeting">PastMeetingActivity</string>
     <string name="title_activity_red_apoyo">RedApoyoActivity</string>
     <string name="title_activity_new_red_apoyo">NewRedApoyoActivity</string>
+    <string name="title_activity_gallery">GalleryActivity</string>
+    <string name="title_activity_consumo">ConsumoActivity</string>
+    <string name="title_activity_new_consumo">NewConsumoActivity</string>
+
+    <string name="item_picker">Select an iten</string>
+    <string-array name="sustancia_items">
+        <item>Cocaina (lineas)</item>
+        <item>Heroina (grs)</item>
+        <item>Alcohol (litros)</item>
+    </string-array>
+
+    <string-array name="am_pm">
+        <item>AM</item>
+        <item>PM</item>
+    </string-array>
+
 </resources>

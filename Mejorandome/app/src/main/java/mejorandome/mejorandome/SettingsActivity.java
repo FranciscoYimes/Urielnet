@@ -23,6 +23,7 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
+import mejorandome.mejorandome.Adapters.SimpleProgressDialog;
 import mejorandome.mejorandome.Adapters.Utils;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -30,6 +31,7 @@ public class SettingsActivity extends AppCompatActivity {
     private Button logoutButton;
     private Button changepassOption;
     private Button redApoyo;
+    private Button imagesButton;
     private EditText password1;
     private EditText password2;
     private TextView changePassMessage;
@@ -40,6 +42,7 @@ public class SettingsActivity extends AppCompatActivity {
     private Utils utils;
     private int idPaciente;
     private Toolbar mToolbar;
+    private SimpleProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +57,8 @@ public class SettingsActivity extends AppCompatActivity {
 
         utils = new Utils();
 
+        dialog = SimpleProgressDialog.build(this, "Cargando...");
+
         idPaciente = getIntent().getIntExtra("idPaciente",0);
 
         logoutButton = (Button) findViewById(R.id.logout_button);
@@ -64,6 +69,7 @@ public class SettingsActivity extends AppCompatActivity {
         changePassButton = (Button) findViewById(R.id.change_pass_button);
         changePassMessage = (TextView) findViewById(R.id.change_pass_message);
         redApoyo = (Button) findViewById(R.id.red_apoyo);
+        imagesButton = (Button) findViewById(R.id.images_button);
 
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +103,15 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        imagesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SettingsActivity.this, GalleryActivity.class);
+                intent.putExtra("idPaciente",idPaciente);
+                startActivity(intent);
+            }
+        });
+
         changePassButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,6 +137,7 @@ public class SettingsActivity extends AppCompatActivity {
             final String METHOD_NAME = "changePassword";
             final String SOAP_ACTION = "http://tempuri.org/IService1/changePassword";
             String Error;
+            dialog.show();
             try {
                 SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
                 request.addProperty("idPaciente",idPaciente);
@@ -189,6 +205,7 @@ public class SettingsActivity extends AppCompatActivity {
                 changePassMessage.setVisibility(View.VISIBLE);
                 changePassMessage.setText("Error al cambiar la contraseña");
             }
+            dialog.dismiss();
         }
     }
 
@@ -223,6 +240,7 @@ public class SettingsActivity extends AppCompatActivity {
             final String METHOD_NAME = "logout";
             final String SOAP_ACTION = "http://tempuri.org/IService1/logout";
             String Error;
+            dialog.show();
             try {
                 SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
                 request.addProperty("macAddress",utils.getMACAddress("wlan0"));
@@ -260,6 +278,7 @@ public class SettingsActivity extends AppCompatActivity {
         }
         protected void onPostExecute(Void result)
         {
+            dialog.dismiss();
             Intent i = new Intent(SettingsActivity.this, LoginActivity.class);
             startActivity(i);
             finish();

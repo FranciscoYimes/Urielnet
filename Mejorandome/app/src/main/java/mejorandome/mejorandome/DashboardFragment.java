@@ -30,6 +30,7 @@ import java.util.List;
 import lecho.lib.hellocharts.model.PieChartData;
 import lecho.lib.hellocharts.model.SliceValue;
 import lecho.lib.hellocharts.view.PieChartView;
+import mejorandome.mejorandome.Adapters.SimpleProgressDialog;
 
 public class DashboardFragment extends Fragment {
 
@@ -51,6 +52,7 @@ public class DashboardFragment extends Fragment {
     private int idPaciente;
     private boolean privacidadAlta;
     private Intent intent;
+    private SimpleProgressDialog dialog;
 
     String meses[] = {"Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto"," ;Septiembre","Octubre","Noviembre","Diciemrbre"};
 
@@ -321,7 +323,7 @@ public class DashboardFragment extends Fragment {
             String Error;
             try {
                 SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-                request.addProperty("idPaciente", idPaciente); // Paso parametros al WS
+                request.addProperty("idPaciente", idPaciente);
 
                 SoapSerializationEnvelope sobre = new SoapSerializationEnvelope(SoapEnvelope.VER11);
                 sobre.dotNet = true;
@@ -431,7 +433,7 @@ public class DashboardFragment extends Fragment {
             if(resultado!=null)
             {
                 logros.setText(logrosRes.toString());
-                inasistencias.setText(resultado.getProperty("InasistenciasSeguidas").toString());
+                 if(resultado.getProperty("InasistenciasSeguidas")!=null) inasistencias.setText(resultado.getProperty("InasistenciasSeguidas").toString());
             }
             else
             {

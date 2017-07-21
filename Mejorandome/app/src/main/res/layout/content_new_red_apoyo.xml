@@ -14,8 +14,6 @@
     tools:context="mejorandome.mejorandome.NewRedApoyoActivity"
     tools:showIn="@layout/activity_new_red_apoyo">
 
-
-
     <LinearLayout
         android:layout_marginTop="10dp"
         android:orientation="vertical"
@@ -35,14 +33,14 @@
             android:shadowColor="#fff"
             android:background="@drawable/circle_edittext"
             android:textColor="@color/colorPrimary"
-            android:textColorHint="@color/colorPrimary"
+            android:textColorHint="#757b80"
             android:id="@+id/name"
             android:textAlignment="center"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_gravity="center_horizontal"
             android:ems="10"
-            android:hint="Juan Perez"
+            android:hint="Nombre de Contacto..."
             android:inputType="text" />
 
         <TextView
@@ -59,18 +57,28 @@
             android:background="@drawable/circle_edittext"
             android:id="@+id/number"
             android:textColor="@color/colorPrimary"
-            android:textColorHint="@color/colorPrimary"
+            android:textColorHint="#757b80"
             android:textAlignment="center"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_gravity="center_horizontal"
             android:ems="10"
-            android:hint="+56912345678"
-            android:inputType="text" />
+            android:hint="+569123456..."
+            android:inputType="number" />
+
+        <Button
+            android:layout_marginTop="20dp"
+            android:id="@+id/search_contact"
+            android:background="@drawable/green_button"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_gravity="center_horizontal"
+            android:text="Buscar en Lista de contactos" />
+
         <Button
             android:layout_marginTop="20dp"
             android:id="@+id/add_red_button"
-            android:background="@drawable/green_button"
+            android:background="@drawable/button"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_gravity="center_horizontal"

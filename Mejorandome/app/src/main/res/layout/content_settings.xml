@@ -103,6 +103,15 @@
 
             <Button
                 android:layout_marginTop="20dp"
+                android:id="@+id/images_button"
+                android:background="@drawable/accent_button"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_gravity="center_horizontal"
+                android:text="Lista de Imagenes" />
+
+            <Button
+                android:layout_marginTop="20dp"
                 android:id="@+id/logout_button"
                 android:background="@drawable/accent_button"
                 android:layout_width="match_parent"
