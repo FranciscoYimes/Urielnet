@@ -81,144 +81,7 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
-                android:orientation="horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
 
-                <TextView
-                    android:layout_gravity="center_vertical"
-                    android:textColor="#000"
-                    android:textSize="18dp"
-                    android:text="Fecha:"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <EditText
-                    android:id="@+id/day"
-                    android:layout_marginLeft="8dp"
-                    android:background="@drawable/circle_edittext"
-                    android:textColor="@color/colorPrimary"
-                    android:textColorHint="#757b80"
-                    android:textAlignment="center"
-                    android:layout_width="65dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center_horizontal"
-                    android:ems="10"
-                    android:hint="15"
-                    android:inputType="datetime" />
-
-                <TextView
-                    android:layout_marginLeft="5dp"
-                    android:layout_gravity="center_vertical"
-                    android:textColor="#000"
-                    android:textSize="18dp"
-                    android:text="/"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <EditText
-                    android:id="@+id/month"
-                    android:layout_marginLeft="3dp"
-                    android:background="@drawable/circle_edittext"
-                    android:textColor="@color/colorPrimary"
-                    android:textColorHint="#757b80"
-                    android:textAlignment="center"
-                    android:layout_width="65dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center_horizontal"
-                    android:ems="10"
-                    android:hint="07"
-                    android:inputType="datetime" />
-
-                <TextView
-                    android:layout_marginLeft="5dp"
-                    android:layout_gravity="center_vertical"
-                    android:textColor="#000"
-                    android:textSize="18dp"
-                    android:text="/"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <EditText
-                    android:id="@+id/year"
-                    android:layout_marginLeft="3dp"
-                    android:background="@drawable/circle_edittext"
-                    android:textColor="@color/colorPrimary"
-                    android:textColorHint="#757b80"
-                    android:textAlignment="center"
-                    android:layout_width="90dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center_horizontal"
-                    android:ems="10"
-                    android:hint="2017"
-                    android:inputType="datetime" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
-                android:orientation="horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_gravity="center_vertical"
-                    android:textColor="#000"
-                    android:textSize="18dp"
-                    android:text="Hora"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <EditText
-                    android:id="@+id/hour"
-                    android:layout_marginLeft="20dp"
-                    android:background="@drawable/circle_edittext"
-                    android:textColor="@color/colorPrimary"
-                    android:textColorHint="#757b80"
-                    android:textAlignment="center"
-                    android:layout_width="70dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center_horizontal"
-                    android:ems="10"
-                    android:hint="11"
-                    android:inputType="time" />
-
-                <TextView
-                    android:layout_marginLeft="5dp"
-                    android:layout_gravity="center_vertical"
-                    android:textColor="#000"
-                    android:textSize="18dp"
-                    android:text=":"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <EditText
-                    android:id="@+id/minute"
-                    android:layout_marginLeft="8dp"
-                    android:background="@drawable/circle_edittext"
-                    android:textColor="@color/colorPrimary"
-                    android:textColorHint="#757b80"
-                    android:textAlignment="center"
-                    android:layout_width="70dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center_horizontal"
-                    android:ems="10"
-                    android:hint="00"
-                    android:inputType="time" />
-
-                <Spinner
-                    android:id="@+id/am_pm_spinner"
-                    android:layout_marginLeft="10dp"
-                    android:background="@drawable/custom_spinner_background"
-                    android:spinnerMode="dropdown"
-                    android:layout_width="60dp"
-                    android:layout_height="40dp" />
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_gravity="center_horizontal"
@@ -231,7 +94,7 @@
                     android:layout_gravity="center_horizontal"
                     android:textColor="#000"
                     android:textSize="18dp"
-                    android:text="¿Con quién consumiste?"
+                    android:text="Lugar de Consumo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -246,7 +109,7 @@
                     android:layout_height="40dp"
                     android:layout_gravity="center_horizontal"
                     android:ems="10"
-                    android:hint="Amigos..."
+                    android:hint="Casa"
                     android:inputType="text" />
 
                 <TextView
@@ -254,7 +117,7 @@
                     android:layout_gravity="center_horizontal"
                     android:textColor="#000"
                     android:textSize="18dp"
-                    android:text="¿Cómo obtuviste la sustancia?"
+                    android:text="Lugar de Adquisicion de la Sustancia"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -269,8 +132,59 @@
                     android:layout_height="40dp"
                     android:layout_gravity="center_horizontal"
                     android:ems="10"
-                    android:hint="Con un amigo..."
+                    android:hint="En la calle"
                     android:inputType="text" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center_horizontal"
+                android:textColor="#000"
+                android:textSize="18dp"
+                android:text="Fecha y Hora de Consumo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+
+
+            <LinearLayout
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/white_background"
+                android:orientation="vertical"
+                android:layout_width="290dp"
+                android:layout_height="40dp">
+
+                <TextView
+                    android:id="@+id/date_consumo"
+                    android:layout_marginTop="7dp"
+                    android:textSize="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:text="01/07/2017"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/white_background"
+                android:orientation="vertical"
+                android:layout_width="290dp"
+                android:layout_height="40dp">
+
+                <TextView
+                    android:id="@+id/time_consumo"
+                    android:layout_marginTop="7dp"
+                    android:textSize="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:text="12:00"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 
@@ -280,7 +194,7 @@
                 android:id="@+id/save_consumo_button"
                 android:text="Guardar"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/button"
                 android:layout_width="match_parent"
                 android:layout_height="40dp" />

@@ -1,6 +1,8 @@
 package mejorandome.mejorandome;
 
-import android.icu.util.Calendar;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -8,11 +10,20 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
+
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.SoapFault;
@@ -24,39 +35,44 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.Calendar;
 
 import mejorandome.mejorandome.Adapters.SimpleProgressDialog;
 
 public class NewConsumoActivity extends AppCompatActivity {
 
     private Spinner spinner;
-    private Spinner ampmSpinner;
-    private int day;
-    private int month;
-    private int year;
-    private int hour;
-    private int minute;
     private String dateTime;
     private String companiaString;
     private int cantidadInt;
     private String obtencionString;
     private String tipoConsumo;
 
-    private EditText dayText;
-    private EditText monthText;
-    private EditText yearText;
-    private EditText hourText;
-    private EditText minuteText;
     private EditText compania;
     private EditText obtecion;
     private EditText cantidad;
+
+    private TextView dateEditText;
+    private TextView timeEditText;
 
     private Toolbar mToolbar;
 
     private int idPaciente;
     private SimpleProgressDialog dialog;
 
+    private DatePickerDialog datePickerDialog;
+    private TimePickerDialog timePickerDialog;
+
     private Button saveButton;
+
+    final Calendar c = Calendar.getInstance();
+    private int mYear; // current year
+    private int mMonth; // current month
+    private int mDay; // current day
+    private int mHour;
+    private int mMinute;
+
+    private GoogleApiClient client;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -74,18 +90,65 @@ public class NewConsumoActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         spinner = (Spinner) findViewById(R.id.spinner);
-        ampmSpinner = (Spinner) findViewById(R.id.am_pm_spinner);
 
-        dayText = (EditText) findViewById(R.id.day);
-        monthText = (EditText) findViewById(R.id.month);
-        yearText = (EditText) findViewById(R.id.year);
-        hourText = (EditText) findViewById(R.id.hour);
-        minuteText = (EditText) findViewById(R.id.minute);
+        mYear = c.get(Calendar.YEAR); // current year
+        mMonth = c.get(Calendar.MONTH); // current month
+        mDay = c.get(Calendar.DAY_OF_MONTH); // current day
+        mHour = c.get(Calendar.HOUR_OF_DAY);
+        mMinute = c.get(Calendar.MINUTE);
+
         compania = (EditText) findViewById(R.id.compania);
         obtecion = (EditText) findViewById(R.id.obtencion);
         cantidad = (EditText) findViewById(R.id.cantidad_consumo);
 
+        dateEditText = (TextView) findViewById(R.id.date_consumo);
+        timeEditText = (TextView) findViewById(R.id.time_consumo);
+
         saveButton = (Button) findViewById(R.id.save_consumo_button);
+
+        dateEditText.setText(String.valueOf(mDay) + "/" + String.valueOf(mMonth) + "/" + String.valueOf(mYear));
+        timeEditText.setText(String.valueOf(mHour)+":"+String.valueOf(mMinute));
+
+        datePickerDialog = new DatePickerDialog(NewConsumoActivity.this,
+                new DatePickerDialog.OnDateSetListener() {
+
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+                        dateEditText.setText(String.valueOf(dayOfMonth) + "/" + String.valueOf(monthOfYear) + "/" + String.valueOf(year));
+
+                    }
+                }, mYear, mMonth, mDay
+        );
+
+        timePickerDialog = new TimePickerDialog(NewConsumoActivity.this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                timeEditText.setText(String.valueOf(hourOfDay)+":"+String.valueOf(minute));
+            }
+        },mHour,mMinute,false);
+
+        timeEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        timeEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                timePickerDialog.show();
+            }
+        });
+
+        dateEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                datePickerDialog.show();
+            }
+        });
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,8 +164,11 @@ public class NewConsumoActivity extends AppCompatActivity {
         });
 
         AddItemsToSpinner();
-        AddItemsToAmPmSpinner();
-        GetDateTime();
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     public void AddItemsToSpinner() {
@@ -112,65 +178,59 @@ public class NewConsumoActivity extends AppCompatActivity {
         spinner.setAdapter(adapter);
     }
 
-    public void AddItemsToAmPmSpinner() {
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.am_pm, R.layout.spinner_layout);
-        adapter.setDropDownViewResource(R.layout.spinner_layout);
-
-        ampmSpinner.setAdapter(adapter);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public void GetDateTime() {
-        Calendar c = Calendar.getInstance();
-        day = c.get(Calendar.DAY_OF_MONTH);
-        month = c.get(Calendar.MONTH);
-        year = c.get(Calendar.YEAR);
-        hour = c.get(Calendar.HOUR);
-        minute = c.get(Calendar.MINUTE);
-
-        dayText.setText(String.valueOf(day));
-        monthText.setText(String.valueOf(month));
-        yearText.setText(String.valueOf(year));
-        hourText.setText(String.valueOf(hour));
-        minuteText.setText(String.valueOf(minute));
-    }
-
     public void Verify() {
-        if (VerifyDate()) {
-            if (compania.getText().toString().equals("") || obtecion.getText().toString().equals("") || cantidad.getText().toString().equals("")) {
-                Toast toast = Toast.makeText(NewConsumoActivity.this, "Debes completar los campos.", Toast.LENGTH_SHORT);
-                toast.show();
-            } else {
-                dateTime = yearText.getText().toString() + ", "+monthText.getText().toString() + ", " + dayText.getText().toString() + ", " + hourText.getText().toString() + ", " + minuteText.getText().toString() + ", 00";
-                companiaString = compania.getText().toString();
-                cantidadInt = Integer.parseInt(cantidad.getText().toString());
-                tipoConsumo = spinner.getSelectedItem().toString();
-                obtencionString = obtecion.getText().toString();
-
-                new AddConsumo().execute();
-            }
-        }
-        else
-        {
-            Toast toast = Toast.makeText(NewConsumoActivity.this, "La hora o fecha ingresada es incorrecta.", Toast.LENGTH_SHORT);
+        if (compania.getText().toString().equals("") || obtecion.getText().toString().equals("") || cantidad.getText().toString().equals("")) {
+            Toast toast = Toast.makeText(NewConsumoActivity.this, "Debes completar los campos.", Toast.LENGTH_SHORT);
             toast.show();
+        } else {
+            companiaString = compania.getText().toString();
+            cantidadInt = Integer.parseInt(cantidad.getText().toString());
+            tipoConsumo = spinner.getSelectedItem().toString();
+            obtencionString = obtecion.getText().toString();
+            new AddConsumo().execute();
         }
     }
 
-    public boolean VerifyDate()
-    {
-        if(Integer.parseInt(dayText.getText().toString())>31 || Integer.parseInt(dayText.getText().toString())<1) return false;
-        if(Integer.parseInt(monthText.getText().toString())>12 || Integer.parseInt(monthText.getText().toString())<1) return false;
-        if(Integer.parseInt(yearText.getText().toString())>2019 || Integer.parseInt(yearText.getText().toString())<2017) return false;
-        if(Integer.parseInt(hourText.getText().toString())>11 || Integer.parseInt(hourText.getText().toString())<0) return false;
-        if(Integer.parseInt(minuteText.getText().toString())>59 || Integer.parseInt(minuteText.getText().toString())<0) return false;
-        return true;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("NewConsumo Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
     }
 
-    private class AddConsumo extends AsyncTask<Void,Void,Void>
-    {
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        AppIndex.AppIndexApi.start(client, getIndexApiAction());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.end(client, getIndexApiAction());
+        client.disconnect();
+    }
+
+    private class AddConsumo extends AsyncTask<Void, Void, Void> {
         SoapPrimitive resultado;
         boolean response;
+
         @Override
         protected Void doInBackground(Void... params) {
             final String NAMESPACE = "http://tempuri.org/";
@@ -222,24 +282,19 @@ public class NewConsumoActivity extends AppCompatActivity {
 
             return null;
         }
-        protected void onPostExecute(Void result)
-        {
+
+        protected void onPostExecute(Void result) {
             dialog.dismiss();
 
-            if(resultado!=null)
-            {
+            if (resultado != null) {
                 response = Boolean.parseBoolean(resultado.toString());
-            }
-            else response = false;
+            } else response = false;
 
-            if(response)
-            {
+            if (response) {
                 Toast toast = Toast.makeText(NewConsumoActivity.this, "Se ha guardado el consumo", Toast.LENGTH_SHORT);
                 toast.show();
                 finish();
-            }
-            else
-            {
+            } else {
                 Toast toast = Toast.makeText(NewConsumoActivity.this, "No se ha logrado guardar el consumo.", Toast.LENGTH_SHORT);
                 toast.show();
             }

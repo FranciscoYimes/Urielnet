@@ -76,7 +76,11 @@
         <activity
             android:name=".NewConsumoActivity"
             android:label="Nuevo Consumo"
-            android:theme="@style/AppTheme2"></activity>
+            android:theme="@style/AppTheme2"></activity><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
     </application>
 
 </manifest>
